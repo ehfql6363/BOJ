@@ -23,7 +23,6 @@ public class BOJ1157 {
             else if(alpha[i] == max) ans = '?';
             System.out.print(alpha[i]+" ");
         }
-        System.out.println();
 
         bw.write(String.valueOf(ans));
         bw.flush();

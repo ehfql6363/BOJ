@@ -6,29 +6,34 @@ public class BOJ1747 {
     public static int N;
     public static boolean flag1 = false;
     public static boolean flag2 = false;
+    public static BufferedWriter bw;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         N = Integer.parseInt(br.readLine());
 
         brute();
 
-        bw.write(N);
         bw.flush();
         bw.close();
         br.close();
     }
-    public static void brute(){
+    public static void brute() throws IOException {
         while(true){
+            if(N == 1) N++;
             palindrome();
             prime();
-            if(flag1 && flag2) return;
+            if(flag1 && flag2) {
+                bw.write(String.valueOf(N));
+                return;
+            }
         }
     }
     public static void palindrome(){
         while(true){
-            char[] arr = new char[String.valueOf(N).length()];
+            String strN = String.valueOf(N);
+            char[] arr = new char[strN.length()];
 
             for(int i=0; i<arr.length; i++){
                 arr[i] = String.valueOf(N).charAt(i);
@@ -52,7 +57,7 @@ public class BOJ1747 {
         }
     }
     public static void prime(){
-        for(int i=2; i<Math.sqrt(N); i++){
+        for(int i=2; i<=Math.sqrt(N); i++){
             if(N % i == 0) {
                 N++;
                 return;

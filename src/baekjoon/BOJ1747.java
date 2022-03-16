@@ -33,11 +33,9 @@ public class BOJ1747 {
     public static void palindrome(){
         while(true){
             String strN = String.valueOf(N);
-            char[] arr = new char[strN.length()];
+            char[] arr;
 
-            for(int i=0; i<arr.length; i++){
-                arr[i] = String.valueOf(N).charAt(i);
-            }
+            arr = strN.toCharArray();
 
             int left = 0;
             int right = arr.length - 1;

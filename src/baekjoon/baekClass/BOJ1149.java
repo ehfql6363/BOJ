@@ -4,16 +4,15 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 public class BOJ1149 {
-    public static int test;
     public static int[][] color;
     public static boolean[][] visited;
-    public static int price = 0;
+    public static int price = Integer.MAX_VALUE;
     public static void main(String[] args) throws IOException {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
-        test = Integer.parseInt(br.readLine());
+        int test = Integer.parseInt(br.readLine());
         color = new int[test][3];
         visited = new boolean[test][3];
 
@@ -25,20 +24,57 @@ public class BOJ1149 {
         }
 
         int sum = 0;
+        int idx = 1;
         for(int i=0; i<3; i++){
             visited[0][i] = true;
+            visited[1][i] = true;
             sum += color[0][i];
-            dp(sum);
+
+            dp(sum, idx);
+
             sum = 0;
+            visited[0][i] = false;
+            visited[1][i] = false;
         }
 
+        bw.write(String.valueOf(price));
+        bw.flush();
+        bw.close();
+        br.close();
+
     }
-    public static void dp(int sum){
-        for(int i=1; i<test; i++){
-            if(!visited[i][0]){
-                sum+=color[i][0];
-                visited[i][0] = true;
+    public static void dp(int sum, int idx){
+        if(idx == color.length) {
+            price = Math.min(sum, price);
+            return;
+        }
+
+        for(int i=0; i<3; i++){
+            if(0 < idx && idx < color.length-1){
+                if(!visited[idx][i]){
+                    sum += color[idx][i];
+                    visited[idx][i] = true;
+                    visited[idx+1][i] = true;
+
+                    dp(sum, idx+1);
+
+                    visited[idx][i] = false;
+                    visited[idx+1][i] = false;
+                    sum -= color[idx][i];
+                }
             }
+            if(idx == color.length-1){
+                if(!visited[idx][i]){
+                    sum += color[idx][i];
+                    visited[idx][i] = true;
+
+                    dp(sum, idx+1);
+
+                    visited[idx][i] = false;
+                    sum -= color[idx][i];
+                }
+            }
+
         }
     }
 }

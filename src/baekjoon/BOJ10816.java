@@ -61,4 +61,8 @@ public class BOJ10816 {
         }
         return start;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/master

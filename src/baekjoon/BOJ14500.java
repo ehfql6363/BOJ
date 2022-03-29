@@ -32,7 +32,7 @@ public class BOJ14500 {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                brute(i, j);
+                search(i, j);
                 fxxkCheck(i, j);
             }
         }
@@ -42,7 +42,7 @@ public class BOJ14500 {
         bw.close();
         br.close();
     }
-    public static void brute(int row, int col){
+    public static void search(int row, int col){
 
         if(CNT == 4) {
             MAX = Math.max(SUM, MAX);
@@ -61,7 +61,7 @@ public class BOJ14500 {
             SUM += arr[row][col];
             CNT++;
 
-            brute(nRow, nCol);
+            search(nRow, nCol);
 
             CNT--;
             visited[row][col] = false;

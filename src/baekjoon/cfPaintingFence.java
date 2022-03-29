@@ -4,55 +4,50 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 public class cfPaintingFence {
-    public static int stroke = 0;
+    public static int[] fence;
     public static void main(String[] args) throws IOException {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
         int item = Integer.parseInt(br.readLine());
-        int[] fence = new int[item];
+        fence = new int[item];
 
         st = new StringTokenizer(br.readLine());
         for(int i=0; i< fence.length; i++){
             fence[i] = Integer.parseInt(st.nextToken());
         }
 
-        int idx = 0;
-        boolean check = false;
-        while(true){
-            if(idx == fence.length){
-                if(check){
-                    check = false;
-                    stroke++;
-                }
-                idx = 0;
-                if(painted(fence)) break;
-            }
-
-            if(fence[idx] != 0) {
-                check = true;
-                fence[idx]--;
-                idx++;
-            }
-            else{
-                if(check) {
-                    stroke++;
-                    check = false;
-                }
-                idx++;
-            }
-        }
-        int ans = fence.length >= stroke ? stroke : fence.length;
-        bw.write(String.valueOf(ans));
+        bw.write(String.valueOf(painting(0, item-1)));
         bw.flush();
         bw.close();
         br.close();
     }
-    public static boolean painted(int[] arr){
-        for (int j : arr) {
-            if (j != 0) return false;
+    public static int painting(int start, int end){
+        int st;
+        int en;
+        int hor;
+        int ver = end - start + 1;
+        int min = Integer.MAX_VALUE;
+
+        for(int i=start; i<=end; i++){
+            min = Math.min(min, fence[i]);
         }
-        return true;
+        for(int i=start; i<=end; i++){
+            fence[i] -= min;
+        }
+        hor = min;
+
+        for(int i=start; i<=end;){
+            if(fence[i] == 0) i++;
+            else{
+                st = i;
+                en = st;
+                while(en <= end && fence[en] != 0) en++;
+                hor += painting(st, en-1);
+                i = en;
+            }
+        }
+        return Math.min(hor, ver);
     }
 }

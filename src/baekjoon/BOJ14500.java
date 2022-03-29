@@ -49,7 +49,7 @@ public class BOJ14500 {
             return;
         }
 
-        for(int i=0; i<4; i++){
+        for(int i=0; i<4; i++){ // 4방 탐색
             int nCol = col + cols[i];
             int nRow = row + rows[i];
 
@@ -68,17 +68,17 @@ public class BOJ14500 {
             SUM -= arr[row][col];
         }
     }
-    static void fxxkCheck(int y, int x) {
-        if (y < n - 2 && x < m - 1)
-            MAX = Math.max(MAX, arr[y][x] + arr[y + 1][x] + arr[y + 2][x] + arr[y + 1][x + 1]);
+    static void fxxkCheck(int row, int col) { //ㅗ모양 체크 (따로 처음 시작하는 위치에서 다로 해줘야 함)
+        if (row < n - 2 && col < m - 1)
+            MAX = Math.max(MAX, arr[row][col] + arr[row + 1][col] + arr[row + 2][col] + arr[row + 1][col + 1]);
 
-        if (y < n - 2 && x > 0)
-            MAX = Math.max(MAX, arr[y][x] + arr[y + 1][x] + arr[y + 2][x] + arr[y + 1][x - 1]);
+        if (row < n - 2 && col > 0)
+            MAX = Math.max(MAX, arr[row][col] + arr[row + 1][col] + arr[row + 2][col] + arr[row + 1][col - 1]);
 
-        if (y < n - 1 && x < m - 2)
-            MAX = Math.max(MAX, arr[y][x] + arr[y][x + 1] + arr[y][x + 2] + arr[y + 1][x + 1]);
+        if (row < n - 1 && col < m - 2)
+            MAX = Math.max(MAX, arr[row][col] + arr[row][col + 1] + arr[row][col + 2] + arr[row + 1][col + 1]);
 
-        if (y > 0 && x < m - 2)
-            MAX = Math.max(MAX, arr[y][x] + arr[y][x + 1] + arr[y][x + 2] + arr[y - 1][x + 1]);
+        if (row > 0 && col < m - 2)
+            MAX = Math.max(MAX, arr[row][col] + arr[row][col + 1] + arr[row][col + 2] + arr[row - 1][col + 1]);
     }
 }

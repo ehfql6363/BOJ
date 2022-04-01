@@ -1,9 +1,9 @@
-package baekjoon;
+package CodeForce;
 
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class cfPaintingFence {
+public class P448C {
     public static int[] fence;
     public static void main(String[] args) throws IOException {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));

@@ -5,7 +5,6 @@ import java.util.StringTokenizer;
 
 public class BOJ16987 {
     public static int N;
-    public static int CNT = 0;
     public static int ANS = Integer.MIN_VALUE;
     public static int[] d;
     public static int[] w;
@@ -26,43 +25,42 @@ public class BOJ16987 {
             w[i] = Integer.parseInt(st.nextToken());
         }
 
-        brute(0);
+        brute(0, 0);
 
-//        bw.write(String.valueOf(ANS));
-//        bw.flush();
+        bw.write(String.valueOf(ANS == Integer.MIN_VALUE ? 0 : ANS));
+        bw.flush();
         bw.close();
         br.close();
     }
-    public static void brute(int a){
-        System.out.println("-=-=");
-        if(!broken[a]){
-            for(int i=a+1; i<N; i++){
-                int eggA = d[a] - w[i];
-                int eggI = d[i] - w[a];
+    public static void brute(int now, int cnt){
+        if(now==N) return;
+        if(d[now] <= 0) {
+            brute(now+1, cnt);
+            return;
+        }
+        for(int i=0; i<N; i++){
+            if(now == i || d[i] <= 0) continue;
+            int count = 0;
 
-                System.out.println(a);
-                if(eggA <= 0) {
-                    broken[a] = true;
-                    System.out.println(a+ "/" + i);
-                    CNT++;
-                }
-                if(eggI <= 0){
-                    broken[i] = true;
-                    System.out.println(a+ "/" + i);
-                    CNT++;
-                }
+            d[now] -= w[i];
+            d[i] -= w[now];
 
-                if(broken[a]) {
-                    System.out.println("==");
-                    brute(i);
-                }
-                else d[a] = eggA;
+            if(d[now] <= 0){
+                broken[now] = true;
+                count++;
             }
-            System.out.println(CNT);
-            ANS = Math.max(ANS, CNT);
-            System.out.println(ANS);
-            CNT = 0;
-            System.out.println("-----------------");
+            if(d[i]<=0){
+                broken[i] = true;
+                count++;
+            }
+
+            ANS = Math.max(ANS, cnt+count);
+            brute(now+1, cnt+count);
+
+            broken[now] = false;
+            broken[i] = false;
+            d[now] += w[i];
+            d[i] += w[now];
         }
     }
 }

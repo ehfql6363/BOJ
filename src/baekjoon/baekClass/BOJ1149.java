@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 public class BOJ1149 {
     public static int[][] color;
     public static boolean[][] visited;
-    public static int price = Integer.MAX_VALUE;
+    public static int[][] price;
     public static void main(String[] args) throws IOException {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -15,6 +15,7 @@ public class BOJ1149 {
         int test = Integer.parseInt(br.readLine());
         color = new int[test][3];
         visited = new boolean[test][3];
+        price = new int[test][3];
 
         for(int i=0; i<test; i++){
             st = new StringTokenizer(br.readLine());
@@ -23,58 +24,32 @@ public class BOJ1149 {
             color[i][2] = Integer.parseInt(st.nextToken());
         }
 
-        int sum = 0;
-        int idx = 1;
-        for(int i=0; i<3; i++){
-            visited[0][i] = true;
-            visited[1][i] = true;
-            sum += color[0][i];
+        System.arraycopy(color[0], 0, price[0], 0, 3);
 
-            dp(sum, idx);
+        dp(1);
 
-            sum = 0;
-            visited[0][i] = false;
-            visited[1][i] = false;
-        }
+        int ans = Math.min(Math.min(price[test-1][0], price[test-1][1]), price[test-1][2]);
 
-        bw.write(String.valueOf(price));
+//        for(int i=0; i<color.length; i++){
+//            for(int j=0; j<3; j++){
+//                System.out.print(price[i][j]+" ");
+//            }
+//            System.out.println();
+//        }
+
+        bw.write(String.valueOf(ans));
         bw.flush();
         bw.close();
         br.close();
 
     }
-    public static void dp(int sum, int idx){
-        if(idx == color.length) {
-            price = Math.min(sum, price);
-            return;
-        }
+    public static void dp(int lv){
+        if(lv == color.length) return;
 
-        for(int i=0; i<3; i++){
-            if(0 < idx && idx < color.length-1){
-                if(!visited[idx][i]){
-                    sum += color[idx][i];
-                    visited[idx][i] = true;
-                    visited[idx+1][i] = true;
+        price[lv][0] = Math.min(price[lv-1][1], price[lv-1][2]) + color[lv][0];
+        price[lv][1] = Math.min(price[lv-1][0], price[lv-1][2]) + color[lv][1];
+        price[lv][2] = Math.min(price[lv-1][0], price[lv-1][1]) + color[lv][2];
 
-                    dp(sum, idx+1);
-
-                    visited[idx][i] = false;
-                    visited[idx+1][i] = false;
-                    sum -= color[idx][i];
-                }
-            }
-            if(idx == color.length-1){
-                if(!visited[idx][i]){
-                    sum += color[idx][i];
-                    visited[idx][i] = true;
-
-                    dp(sum, idx+1);
-
-                    visited[idx][i] = false;
-                    sum -= color[idx][i];
-                }
-            }
-
-        }
+        dp(lv+1);
     }
 }

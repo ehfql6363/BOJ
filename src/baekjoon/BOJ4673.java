@@ -12,6 +12,6 @@ public class BOJ4673 {
 
     }
     public static void brute(int num){
-        int a = num
+        int a = num;
     }
 }

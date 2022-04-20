@@ -3,16 +3,16 @@ package baekjoon;
 import java.io.*;
 import java.util.*;
 
-class Node implements Comparable<Node>{
+class NodeMDC implements Comparable<NodeMDC>{
     int end, weight;
 
-    public Node(int end, int weight){
+    public NodeMDC(int end, int weight){
         this.end = end;
         this.weight = weight;
     }
 
     @Override
-    public int compareTo(Node o) {
+    public int compareTo(NodeMDC o) {
         return weight - o.weight;
     }
 }
@@ -22,7 +22,7 @@ public class MinDistanceClass {
     private static final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
     private static final int INF = 100_000_000;
     static int v,e,k;
-    static List<Node>[] list;
+    static List<NodeMDC>[] list;
     static int[] dist;
 
 
@@ -46,7 +46,7 @@ public class MinDistanceClass {
             int end = Integer.parseInt(st.nextToken());
             int weight = Integer.parseInt(st.nextToken());
             // start���� end�� ���� weight ����ġ
-            list[start].add(new Node(end, weight));
+            list[start].add(new NodeMDC(end, weight));
         }
 
         StringBuilder sb = new StringBuilder();
@@ -64,22 +64,22 @@ public class MinDistanceClass {
     }
 
     private static void dijkstra(int start){
-       PriorityQueue<Node> queue = new PriorityQueue<>();
+       PriorityQueue<NodeMDC> queue = new PriorityQueue<>();
        boolean[] check = new boolean[v + 1];
-       queue.add(new Node(start, 0));
+       queue.add(new NodeMDC(start, 0));
        dist[start] = 0;
 
        while(!queue.isEmpty()){
-           Node curNode = queue.poll();
+           NodeMDC curNode = queue.poll();
            int cur = curNode.end;
 
            if(check[cur]) continue;
            check[cur] = true;
 
-           for(Node node : list[cur]){
+           for(NodeMDC node : list[cur]){
                if(dist[node.end] > dist[cur] + node.weight){
                    dist[node.end] = dist[cur] + node.weight;
-                   queue.add(new Node(node.end, dist[node.end]));
+                   queue.add(new NodeMDC(node.end, dist[node.end]));
                }
            }
        }

@@ -1,18 +1,26 @@
 package baekjoon;
 
-import java.io.*;
-
+import java.util.Scanner;
 
 public class BOJ2839 {
-    public static void main(String[] args) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int n = Integer.parseInt(br.readLine());
-        int[] dp = new int[n+1];
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
 
-        for(int i=0; i<dp.length; i++){
-            if((i-dp[i])/3 > 0) dp[i] = (i-dp[i])/3;
+        int n = in.nextInt();
+
+
+        if (n == 4 || n == 7) {
+            System.out.println(-1);
+        }
+        else if (n % 5 == 0) {
+            System.out.println(n / 5);
+        }
+        else if (n % 5 == 1 || n % 5 == 3) {
+            System.out.println((n / 5) + 1);
+        }
+        else if (n % 5 == 2 || n % 5 == 4) {
+            System.out.println((n / 5) + 2);
         }
     }
 }

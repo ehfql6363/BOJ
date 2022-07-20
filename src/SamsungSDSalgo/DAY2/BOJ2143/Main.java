@@ -3,7 +3,6 @@ package SamsungSDSalgo.DAY2.BOJ2143;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
 import java.util.StringTokenizer;
 
 public class Main {

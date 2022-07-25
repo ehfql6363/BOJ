@@ -3,9 +3,11 @@ package SamsungSDSalgo.DAY4.BOJ14476;
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+/**
+ * 유클리드 호제법 (누적)
+ */
 
-    static int ans;
+public class Main {
     static int[] arr;
     static int[] arc;
     static int[] desc;
@@ -34,7 +36,7 @@ public class Main {
         }
 
         int max = -1;
-        int maxIdx = -1;
+        int maxIdx = 0;
         for (int i = 0; i < N; i++) {
             int gcd = 0;
             // 0
@@ -52,14 +54,14 @@ public class Main {
 
             if (arr[i] % gcd != 0 && gcd > max) {
                 max = gcd;
-                maxIdx = arr[i];
+                maxIdx = i;
             }
         }
 
         if (max == -1) {
-            bw.write(max);
+            bw.write(String.valueOf(max));
         }else{
-            bw.write(max + " " + maxIdx);
+            bw.write(max + " " + arr[maxIdx]);
         }
         bw.close();
         br.close();

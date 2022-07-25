@@ -3,6 +3,9 @@ package SamsungSDSalgo.DAY3.BOJ2243;
 import java.io.*;
 import java.util.StringTokenizer;
 
+/**
+ * 인덱스 트리 (카운팅)
+ */
 public class Main {
 
     static int n ,S = 1000001;

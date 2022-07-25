@@ -3,6 +3,9 @@ package SamsungSDSalgo.DAY4.BOJ3955;
 import java.io.*;
 import java.util.StringTokenizer;
 
+/**
+ * 확장 유클리드 호제법
+ */
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -27,25 +30,47 @@ public class Main {
             long a = Integer.parseInt(st.nextToken());
             long b = Integer.parseInt(st.nextToken());
 
-            /**
-             * 1. 해 검증
-             * D = gcd(A, B) = egcd(A, B).r
-             */
+            // 1. 해 검증
+            // D = gcd(A, B) = egcd(A, B).r
+            // Ax + By = C 일때 C % D == 0 이어야 해를 가질 수 있음 : 베주 항등식
+            // C % D != 0 -> 해가 없음
 
             EGResult init = extendedGCD(a, b);
             if (init.r != 1) {
                 sb.append("IMPOSSIBLE").append("\n");
             }
             else{
-                // 2. 초기해
+                // 2. 초기 해 구하기
+                // x0 = s * C / D
+                // y0 = t * C / D
                 long x0 = init.s;
                 long y0 = init.t;
+
+                // 3. 일반해 구하기
+                // x = x0 + B / D * k
+                // y = y0 - A / D * k
+
+                //while  <- k ->
+
+                // 4. k의 범위
+                // x < 0
+                // x0 + B * k < 0
+                // k < - x0 / B
+
+                // 0 < y <= 1e9
+                // 0 < y0 - A * k <= 1e9
+                // -y0 < -A * k <= 1e9 - y0
+                // ( y0 - 1e9 ) / A <= k < y0 / A
+
+                // ( y0 - 1e9 ) / A <= k < y0 / A
+                //                     k < - x0 / B
+
+                // 5. 만족하는 k가 있는지 찾고 k를 통해 y를 구한다.
 
                 long kFromY = (long) Math.ceil((double) y0 / (double) a) - 1;
                 long kFromX = (long) Math.ceil((double) -x0 / (double) b) - 1;
                 long k = Math.min(kFromX, kFromY);
                 long kLimitFromY = (long) Math.ceil((y0 - 1e9) / (double) a);
-
                 if (kLimitFromY <= k) {
                     sb.append(y0 - a * k).append("\n");
                 }else{
@@ -74,7 +99,7 @@ public class Main {
             s0 = s1;
             s1 = temp;
 
-            temp = t0 - q * s1;
+            temp = t0 - q * t1;
             t0 = t1;
             t1 = temp;
         }
@@ -91,14 +116,5 @@ public class Main {
             this.t = t;
             this.r = r;
         }
-    }
-
-    static long gcd(long a, long b) {
-        while (b != 0) {
-            long r = a % b;
-            a = b;
-            b = r;
-        }
-        return b;
     }
 }

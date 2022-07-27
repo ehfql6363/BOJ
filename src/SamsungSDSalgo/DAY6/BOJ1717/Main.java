@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 /**
- * 그래프 합집합
+ * 그래프 합집합 - Disjoint Set
  */
 
 public class Main {

@@ -17,9 +17,9 @@ public class Main {
     static PriorityQueue<Node> pq;
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st;BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st;
 
         V = Integer.parseInt(br.readLine());
         E = Integer.parseInt(br.readLine());
